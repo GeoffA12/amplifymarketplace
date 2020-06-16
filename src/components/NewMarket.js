@@ -3,25 +3,33 @@ import React from "react";
 import { Form, Button, Dialog, Input, Select, Notification } from 'element-react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { createMarket } from '../graphql/mutations';
+import { UserContext } from '../App';
 
 class NewMarket extends React.Component {
   state = {
     addMarketDialog: false,
-    name: ""
+    name: "",
+    tags: ["Arts", "Web Dev", "Technology", "Crafts", "Entertainment"],
+    selectedTags: [],
+    options: []
   };
 
-  handleAddMarket = async () => {
+  handleAddMarket = async (user) => {
     try {
       this.setState({
         addMarketDialog : false
       });
       const input = {
-        name : this.state.name
+        name : this.state.name,
+        owner: user.username,
+        tags: this.state.selectedTags
       }
       const result = await API.graphql(graphqlOperation(createMarket, {input}));
+      console.log(result);
       console.info(`Created market id: ${result.data.createMarket.id}`);
-      this.setState({ name : ""})
+      this.setState({ name : "", selectedTags: []})
     } catch(error) {
+      console.error(error);
       Notification.error({
         title: "Error", 
         message: `${error.message || "Error adding market"}`
@@ -29,8 +37,20 @@ class NewMarket extends React.Component {
     }
   }
 
+  handleFilterTags = (query) => {
+    const options = this.state.tags.map(tag => ({
+      value: tag, label: tag
+    })).filter(tag => tag.label.toLowerCase().includes(query.toLowerCase()))
+    this.setState({
+      options
+    })
+  }
+
   render() {
     return(
+      // Here we can consume the data using the renderProps() function that we can add using an arrow function declaration. 
+      <UserContext.Consumer> 
+      {( { user }) => 
       <React.Fragment>
         <div className="market-header">
           <h1 className="market-title">
@@ -62,6 +82,25 @@ class NewMarket extends React.Component {
                   value={this.state.name}
                 />
               </Form.Item>
+              <Form.Item>
+                <Select 
+                  multiple={true}
+                  filterable={true}
+                  placeholder="Market Tags"
+                  onChange={selectedTags => this.setState({ selectedTags })}
+                  remoteMethod={this.handleFilterTags}
+                  remote={true}
+                  value={this.state.selectedTags}
+                >
+                {this.state.options.map(option => (
+                  <Select.Option 
+                    key={option.value}
+                    label={option.label}
+                    value={option.value}
+                  />
+                ))}
+                </Select>
+              </Form.Item>
             </Form>
           </Dialog.Body>
           <Dialog.Footer>
@@ -70,7 +109,7 @@ class NewMarket extends React.Component {
             </Button>
             <Button 
               type="primary"
-              onClick={this.handleAddMarket}
+              onClick={() => this.handleAddMarket(user)}
               disabled={!this.state.name}
             >
             Add
@@ -79,6 +118,8 @@ class NewMarket extends React.Component {
         </Dialog> 
         
       </React.Fragment>
+      }
+      </UserContext.Consumer>
     );
   }
 }

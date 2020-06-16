@@ -9,6 +9,11 @@ import ProfilePage from './pages/ProfilePage';
 import MarketPage from './pages/MarketPage';
 import Navbar from './components/Navbar';
 
+// We can use the react context api to pass props from a parent component to a child component which is several branches down
+// from the parent branch. userContext will store  a provider which will provide data from our parent component to the child component
+// and a consumer which will provide the child component an ability to consume the state from our parent components. 
+export const UserContext = React.createContext();
+
 class App extends React.Component {
   state = {
     user: null
@@ -72,6 +77,7 @@ class App extends React.Component {
       <Authenticator theme={theme} />
     )
     : (
+      <UserContext.Provider value={{ user}}>
       <Router>
         <React.Fragment>
         {/* Navigation */}
@@ -85,6 +91,7 @@ class App extends React.Component {
           </div>
         </React.Fragment>
       </Router>
+      </UserContext.Provider>
     );
   }
 }
