@@ -90,7 +90,6 @@ class NewMarket extends React.Component {
                   onChange={selectedTags => this.setState({ selectedTags })}
                   remoteMethod={this.handleFilterTags}
                   remote={true}
-                  value={this.state.selectedTags}
                 >
                 {this.state.options.map(option => (
                   <Select.Option 
