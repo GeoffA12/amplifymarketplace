@@ -4,6 +4,8 @@
 export const onCreateMarket = /* GraphQL */ `
   subscription OnCreateMarket {
     onCreateMarket {
+      id
+      name
       products {
         items {
           id
@@ -16,8 +18,6 @@ export const onCreateMarket = /* GraphQL */ `
         }
         nextToken
       }
-      name
-      id
       tags
       owner
       createdAt
@@ -28,6 +28,8 @@ export const onCreateMarket = /* GraphQL */ `
 export const onUpdateMarket = /* GraphQL */ `
   subscription OnUpdateMarket {
     onUpdateMarket {
+      id
+      name
       products {
         items {
           id
@@ -40,8 +42,6 @@ export const onUpdateMarket = /* GraphQL */ `
         }
         nextToken
       }
-      name
-      id
       tags
       owner
       createdAt
@@ -52,6 +52,8 @@ export const onUpdateMarket = /* GraphQL */ `
 export const onDeleteMarket = /* GraphQL */ `
   subscription OnDeleteMarket {
     onDeleteMarket {
+      id
+      name
       products {
         items {
           id
@@ -64,8 +66,6 @@ export const onDeleteMarket = /* GraphQL */ `
         }
         nextToken
       }
-      name
-      id
       tags
       owner
       createdAt
@@ -77,18 +77,18 @@ export const onCreateProduct = /* GraphQL */ `
   subscription OnCreateProduct($owner: String!) {
     onCreateProduct(owner: $owner) {
       id
+      description
       market {
+        id
+        name
         products {
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt
         updatedAt
       }
-      description
       file {
         bucket
         region
@@ -106,18 +106,18 @@ export const onUpdateProduct = /* GraphQL */ `
   subscription OnUpdateProduct($owner: String!) {
     onUpdateProduct(owner: $owner) {
       id
+      description
       market {
+        id
+        name
         products {
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt
         updatedAt
       }
-      description
       file {
         bucket
         region
@@ -135,18 +135,18 @@ export const onDeleteProduct = /* GraphQL */ `
   subscription OnDeleteProduct($owner: String!) {
     onDeleteProduct(owner: $owner) {
       id
+      description
       market {
+        id
+        name
         products {
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt
         updatedAt
       }
-      description
       file {
         bucket
         region

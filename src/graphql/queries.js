@@ -4,6 +4,8 @@
 export const getMarket = /* GraphQL */ `
   query GetMarket($id: ID!) {
     getMarket(id: $id) {
+      id
+      name
       products {
         items {
           id
@@ -16,8 +18,6 @@ export const getMarket = /* GraphQL */ `
         }
         nextToken
       }
-      name
-      id
       tags
       owner
       createdAt
@@ -33,15 +33,17 @@ export const listMarkets = /* GraphQL */ `
   ) {
     listMarkets(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
+        name
         products {
+          items {
+            id
+          }
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt
-        updatedAt
       }
       nextToken
     }
@@ -51,18 +53,18 @@ export const getProduct = /* GraphQL */ `
   query GetProduct($id: ID!) {
     getProduct(id: $id) {
       id
+      description
       market {
+        id
+        name
         products {
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt
         updatedAt
       }
-      description
       file {
         bucket
         region
@@ -85,15 +87,15 @@ export const listProducts = /* GraphQL */ `
     listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        description
         market {
-          name
           id
+          name
           tags
           owner
           createdAt
           updatedAt
         }
-        description
         file {
           bucket
           region
@@ -143,11 +145,11 @@ export const searchMarkets = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
+        id
+        name
         products {
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt

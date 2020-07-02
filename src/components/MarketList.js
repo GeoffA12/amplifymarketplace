@@ -39,16 +39,19 @@ const MarketList = () => {
                 <Link className="link" to={`/markets/${market.id}`}>
                   {market.name}
                 </Link>
+
+                <span style= {{ color: 'var(--darkOrangeAmazon)' }}>
+                  {console.log(market)}
+                  {market.products.items.length}
+                </span>
+                <img src="https://icon.now.sh/shopping_cart/f60" alt="Shopping Cart" />
               </span>
-              <img src="https://icon.now.sh/shopping_cart/f60" alt="Shopping Cart" />
               <div style= {{ color: "var(--lightSquidInk)" }}>
                 {market.owner}
               </div>
-              </div>
-              <div>
               {market.tags && market.tags.map(tag => (
                  <Tag key={tag} type="danger" className="mx-1">
-                   {tag}
+                   {tag}  
                  </Tag>
               ))}
               </div>

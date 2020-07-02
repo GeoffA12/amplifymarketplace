@@ -7,6 +7,8 @@ export const createMarket = /* GraphQL */ `
     $condition: ModelMarketConditionInput
   ) {
     createMarket(input: $input, condition: $condition) {
+      id
+      name
       products {
         items {
           id
@@ -19,8 +21,6 @@ export const createMarket = /* GraphQL */ `
         }
         nextToken
       }
-      name
-      id
       tags
       owner
       createdAt
@@ -34,6 +34,8 @@ export const updateMarket = /* GraphQL */ `
     $condition: ModelMarketConditionInput
   ) {
     updateMarket(input: $input, condition: $condition) {
+      id
+      name
       products {
         items {
           id
@@ -46,8 +48,6 @@ export const updateMarket = /* GraphQL */ `
         }
         nextToken
       }
-      name
-      id
       tags
       owner
       createdAt
@@ -61,6 +61,8 @@ export const deleteMarket = /* GraphQL */ `
     $condition: ModelMarketConditionInput
   ) {
     deleteMarket(input: $input, condition: $condition) {
+      id
+      name
       products {
         items {
           id
@@ -73,8 +75,6 @@ export const deleteMarket = /* GraphQL */ `
         }
         nextToken
       }
-      name
-      id
       tags
       owner
       createdAt
@@ -89,18 +89,18 @@ export const createProduct = /* GraphQL */ `
   ) {
     createProduct(input: $input, condition: $condition) {
       id
+      description
       market {
+        id
+        name
         products {
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt
         updatedAt
       }
-      description
       file {
         bucket
         region
@@ -121,18 +121,18 @@ export const updateProduct = /* GraphQL */ `
   ) {
     updateProduct(input: $input, condition: $condition) {
       id
+      description
       market {
+        id
+        name
         products {
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt
         updatedAt
       }
-      description
       file {
         bucket
         region
@@ -153,18 +153,18 @@ export const deleteProduct = /* GraphQL */ `
   ) {
     deleteProduct(input: $input, condition: $condition) {
       id
+      description
       market {
+        id
+        name
         products {
           nextToken
         }
-        name
-        id
         tags
         owner
         createdAt
         updatedAt
       }
-      description
       file {
         bucket
         region
@@ -233,15 +233,15 @@ export const createOrder = /* GraphQL */ `
       id
       product {
         id
+        description
         market {
-          name
           id
+          name
           tags
           owner
           createdAt
           updatedAt
         }
-        description
         file {
           bucket
           region
